@@ -5,6 +5,11 @@ const passport = require("passport");
 const router = express.Router();
 
 router.get(
+  "/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
+
+router.get(
   "/google/callback",
 
   passport.authenticate("google"),
@@ -13,13 +18,20 @@ router.get(
   }
 );
 
+router.get("/facebook", passport.authenticate("facebook"));
+
 router.get(
-  "/google",
-  passport.authenticate("google", { scope: ["profile", "email"] })
+  "/facebook/callback",
+
+  passport.authenticate("facebook"),
+  (req, res) => {
+    res.send("OK");
+  }
 );
 
 router.get("/api/me", (req, res) => {
-  res.send(req.user);
+  console.log(req.session);
+  res.send(req.session);
 });
 
 router.get("/api/logout", (req, res, next) => {
