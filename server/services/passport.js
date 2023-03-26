@@ -47,11 +47,11 @@ passport.use(
       profileFields: ["id", "displayName", "photos", "email"],
     },
     async (accessToken, refreshToken, profile, done) => {
-      const existingUser = await User.findOne({ googleId: profile.id });
+      const existingUser = await User.findOne({ facebookId: profile.id });
       if (existingUser) {
         return done(null, existingUser);
       }
-      const newUser = await User.create({ googleId: profile.id });
+      const newUser = await User.create({ facebookId: profile.id });
       done(null, newUser);
     }
   )
