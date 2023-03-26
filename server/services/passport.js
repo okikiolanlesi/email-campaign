@@ -18,7 +18,10 @@ passport.use(
     {
       clientID: config.google.clientId,
       clientSecret: config.google.clientSecret,
-      callbackURL: "/auth/google/callback",
+      callbackURL:
+        config.nodeEnv === "development"
+          ? "/auth/google/callback"
+          : "https://okiki-email-campaign-api.onrender.com/auth/google/callback",
     },
     async (accessToken, refreshToken, profile, done) => {
       console.log(profile);
@@ -37,7 +40,10 @@ passport.use(
     {
       clientID: config.facebook.appId,
       clientSecret: config.facebook.appSecret,
-      callbackURL: "/auth/facebook/callback",
+      callbackURL:
+        config.nodeEnv === "development"
+          ? "/auth/google/callback"
+          : "https://okiki-email-campaign-api.onrender.com/auth/facebook/callback",
       profileFields: ["id", "displayName", "photos", "email"],
     },
     async (accessToken, refreshToken, profile, done) => {
